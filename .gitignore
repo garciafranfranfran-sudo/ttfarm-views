@@ -1,0 +1,25 @@
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.dist-info/
+
+# Playwright
+test-results/
+playwright-report/
+
+# Salidas / logs
+*.log
+output/
+screenshots/
+
+# Editores / SO
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
