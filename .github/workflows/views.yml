@@ -1,0 +1,33 @@
+name: views
+on:
+  workflow_dispatch:
+    inputs:
+      n:
+        description: "sesiones totales"
+        default: "100"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5,6,7,8,9]
+    env:
+      SHARDS: "10"
+      N: ${{ github.event.inputs.n }}
+      SHARD: ${{ matrix.shard }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install playwright
+      - run: playwright install --with-deps chromium
+      - run: python test_yt.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: views-${{ matrix.shard }}
+          path: views.csv
